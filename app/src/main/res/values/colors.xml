@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App Palette -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+
+
     <color name="primary">#FF597B</color>
     <color name="secondary">#FF8E9E</color>
+    <color name="secondary_light">#6AFF8E9E</color>
     <color name="background">#EEEEEE</color>
+
+    <!-- Text Palette -->
+    <color name="text_primary">#272829</color>
+    <color name="text_secondary">#61677A</color>
+    <color name="text_ternary">#D8D9DA</color>
+    <color name="text_contrast">#FFF6E0</color>
+    <color name="text_contrast_description">#BCFFF6E0</color>
+
+
 
 
 </resources>
