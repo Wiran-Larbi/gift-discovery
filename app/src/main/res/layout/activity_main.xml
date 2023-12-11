@@ -236,10 +236,13 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lovedGiftRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="296dp"
                     android:layout_toRightOf="@id/lovedSectionSlogan"
                     android:background="@color/transparent"
+                    android:paddingTop="@dimen/_10ssp"
+                    android:paddingBottom="@dimen/_10ssp"
                     >
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -278,15 +281,15 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categoryGiftRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
+                    android:layout_height="140dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="@dimen/_32sdp"
                 android:padding="20dp"
                 >
 
@@ -296,7 +299,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/most_viewed"
+                        android:text="Holidays"
                         android:textSize="18sp"
                         android:textColor="@color/text_secondary"
                         android:textStyle="bold"
@@ -314,8 +317,9 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/holidayRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
+                    android:layout_height="140dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
