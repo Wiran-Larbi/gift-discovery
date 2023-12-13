@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.dotcipher.gift_discovery.db.occasionsDB;
@@ -16,6 +17,9 @@ import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftHelper;
 
 import java.util.ArrayList;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView lovedGiftRecycler;
     RecyclerView.Adapter lovedGiftAdapter;
     LinearLayoutManager lovedGiftLinearLayoutManager;
-
+    LinearLayout addOccasionLayout;
     RecyclerView categoryGiftRecycler;
     RecyclerView.Adapter categoryGiftAdapter;
     LinearLayoutManager categoryGiftLinearLayoutManager;
@@ -43,7 +47,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        addOccasionLayout = findViewById(R.id.iconAddOccasion);
 
+        // Setup click listener for the LinearLayout
+        addOccasionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent to start AddOccasionActivity
+                Intent intent = new Intent(MainActivity.this, AddOccasion.class);
+                startActivity(intent);
+            }
+        });
         // Hooks
         lovedGiftRecycler = findViewById(R.id.lovedGiftRecycler);
         categoryGiftRecycler = findViewById(R.id.categoryGiftRecycler);

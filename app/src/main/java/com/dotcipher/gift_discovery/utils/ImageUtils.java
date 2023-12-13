@@ -28,5 +28,10 @@ public class ImageUtils {
 
         return byteArray;
     }
+    public static byte[] getByteArrayFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
 
 }
