@@ -41,7 +41,6 @@ public class AddGiftActivity extends AppCompatActivity {
             giftImageView = findViewById(R.id.gift_add_image);
             gift_title_et = findViewById(R.id.gift_title_et);
             gift_description_et = findViewById(R.id.gift_description_et);
-            gift_category_et = findViewById(R.id.gift_category_et);
             gift_occasion_et = findViewById(R.id.gift_occasion_et);
             btnAddGift = findViewById(R.id.btnAddGift);
             db = new GiftDatabaseHelper(this);
