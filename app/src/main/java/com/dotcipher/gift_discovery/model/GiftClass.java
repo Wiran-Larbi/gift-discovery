@@ -14,6 +14,7 @@ public class GiftClass {
         this.title = title;
         this.description = description;
         this.category = category;
+        this.occasion = occasion;
         this.image = image;
     }
 

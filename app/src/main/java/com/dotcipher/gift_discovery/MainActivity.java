@@ -127,8 +127,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         ArrayList<CategoryGiftHelper> categoryGiftHelpers = new ArrayList<>();
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.fragrance_type,"Fragrance"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.fragrance_type,"Clothing"));
+
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.electronics,"Electronics"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.books,"Books"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.fashion_accessories,"Fashion & Accessories"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.toys_games,"Toys & Games"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.beauty,"Beauty & Personal Care"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.sports_outdoor,"Sports & Outdoors"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.food_organic,"Food & Beverages"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.diy,"Diy & Craft"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.subscribtion,"Subscription Boxes"));
+        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.home_kitchen,"Home & Kitchen"));
 
         categoryGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
 

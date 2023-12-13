@@ -78,6 +78,14 @@
             />
 
 
+            <Spinner
+                android:id="@+id/gift_category_sp"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:layout_marginTop="12dp"
+                android:spinnerMode="dialog"
+                />
 
                <EditText
             android:id="@+id/gift_occasion_et"

@@ -12,5 +12,19 @@
     <string name="view_all">view all</string>
     <string name="most_viewed">most viewed</string>
 
+    <string-array name="gift_categories">
+        <item>Electronics</item>
+        <item>Books</item>
+        <item>Fashion and Accessories</item>
+        <item>Home and Kitchen</item>
+        <item>Toys and Games</item>
+        <item>Beauty and Personal Care</item>
+        <item>Sports and Outdoors</item>
+        <item>Food and Beverages</item>
+        <item>DIY and Craft</item>
+        <item>Subscription Boxes</item>
+    </string-array>
+
+
 
 </resources>

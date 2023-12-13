@@ -17,12 +17,13 @@ import java.io.ByteArrayOutputStream;
 public class GiftDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "gift_discovery.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TABLE_NAME = "gift";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "gift_title";
     private static final String COLUMN_DESCRIPTION = "gift_description";
     private static final String COLUMN_CATEGORY = "gift_category";
+    private static final String COLUMN_OCCASION = "gift_occasion";
     private static final String COLUMN_IMAGE = "gift_image";
 
     private ByteArrayOutputStream imageOutputStream;
@@ -35,7 +36,7 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create_table_query = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_TITLE + " TEXT, " + COLUMN_DESCRIPTION + " TEXT," + COLUMN_CATEGORY+ " TEXT," + COLUMN_IMAGE + " BLOB);";
+        String create_table_query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_TITLE + " TEXT, " + COLUMN_DESCRIPTION + " TEXT," + COLUMN_CATEGORY + " TEXT," + COLUMN_OCCASION+ " TEXT," + COLUMN_IMAGE + " BLOB);";
 
         db.execSQL(create_table_query);
         Log.d("DB TABLE CREATED", "Table " + TABLE_NAME + " has been created successfuly.");
@@ -108,6 +109,7 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(COLUMN_TITLE, giftToAdd.getTitle());
             contentValues.put(COLUMN_DESCRIPTION, giftToAdd.getDescription());
             contentValues.put(COLUMN_CATEGORY, giftToAdd.getCategory());
+            contentValues.put(COLUMN_OCCASION, giftToAdd.getOccasion());
 
             long result = db.insert(TABLE_NAME, null, contentValues);
             if (result == -1) {
