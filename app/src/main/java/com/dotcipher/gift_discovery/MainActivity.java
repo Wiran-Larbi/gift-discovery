@@ -10,21 +10,35 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.dotcipher.gift_discovery.db.occasionsDB;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.CategoryGiftAdapter;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.CategoryGiftHelper;
-import com.dotcipher.gift_discovery.helpers.HomeAdapter.HolidayAdapter;
-import com.dotcipher.gift_discovery.helpers.HomeAdapter.HolidayHelper;
+import com.dotcipher.gift_discovery.helpers.HomeAdapter.OccasionAdapter;
+import com.dotcipher.gift_discovery.helpers.HomeAdapter.OccasionHelper;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftAdapter;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftHelper;
 
 import java.util.ArrayList;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
 
     RecyclerView lovedGiftRecycler;
     RecyclerView.Adapter lovedGiftAdapter;
     LinearLayoutManager lovedGiftLinearLayoutManager;
-
+    LinearLayout addOccasionLayout;
     RecyclerView categoryGiftRecycler;
     RecyclerView.Adapter categoryGiftAdapter;
     LinearLayoutManager categoryGiftLinearLayoutManager;
@@ -40,11 +54,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        addOccasionLayout = findViewById(R.id.iconAddOccasion);
 
+        // Setup click listener for the LinearLayout
+        addOccasionLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Intent to start AddOccasionActivity
+                Intent intent = new Intent(MainActivity.this, AddOccasion.class);
+                startActivity(intent);
+            }
+        });
         // Hooks
         lovedGiftRecycler = findViewById(R.id.lovedGiftRecycler);
         categoryGiftRecycler = findViewById(R.id.categoryGiftRecycler);
         holidayRecycler = findViewById(R.id.holidayRecycler);
+
 
         iconAddGift = findViewById(R.id.iconAddGift);
         iconAddHoliday = findViewById(R.id.iconAddOccasion);
@@ -73,26 +98,33 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Adding a Planning", Toast.LENGTH_SHORT).show();
             }
         });
+        occasionsDB db = new occasionsDB(this);
+
 
 
         lovedGiftRecyclerFill();
         categoryGiftRecyclerFill();
-        holidayRecyclerFill();
-    }
-    private void holidayRecyclerFill(){
+
+
+        // Initialize RecyclerView
+
         holidayRecycler.setHasFixedSize(true);
-        holidayRecycler.setLayoutManager(new LinearLayoutManager(this));
-
-        ArrayList<HolidayHelper> holidayHelpers = new ArrayList<>();
-        holidayHelpers.add(new HolidayHelper(R.drawable.anniversary_foreground, "Anniversary"));
-        holidayHelpers.add(new HolidayHelper(R.drawable.anniversary_foreground, "Anniversary"));
-        holidayHelpers.add(new HolidayHelper(R.drawable.anniversary_foreground, "Anniversary"));
-
-        holidayLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-
-        holidayAdapter = new HolidayAdapter(MainActivity.this,holidayHelpers);
-        holidayRecycler.setAdapter(holidayAdapter);
+        holidayLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         holidayRecycler.setLayoutManager(holidayLinearLayoutManager);
+
+        // Load data from database and set adapter
+        loadOccasionsFromDatabase();
+    }
+    private void loadOccasionsFromDatabase() {
+        // Create instance of DatabaseHelper
+        occasionsDB db = new occasionsDB(this);
+
+        // Fetch the list of occasions from the database
+        List<OccasionHelper> occasionHelpers = db.getAllOccasions();
+
+        // Set the adapter with the fetched data
+        holidayAdapter = new OccasionAdapter(MainActivity.this, occasionHelpers);
+        holidayRecycler.setAdapter(holidayAdapter);
     }
     private void categoryGiftRecyclerFill(){
         categoryGiftRecycler.setHasFixedSize(true);
