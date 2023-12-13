@@ -105,6 +105,7 @@
                 >
                 <!-- Card Icons -->
                 <LinearLayout
+                    android:id="@+id/iconAddGift"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -115,12 +116,12 @@
                         android:layout_height="60dp"
                         android:background="@drawable/card_1"
                         >
+
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:src="@drawable/gift_icon"
                             android:layout_centerInParent="true"
-                            />
+                            android:src="@drawable/gift_icon" />
 
                     </RelativeLayout>
                     <TextView
@@ -134,6 +135,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/iconAddOccasion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -163,6 +165,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/iconAddPlanning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
