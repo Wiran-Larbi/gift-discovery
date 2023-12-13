@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView lovedGiftRecycler;
     RecyclerView.Adapter lovedGiftAdapter;
     LinearLayoutManager lovedGiftLinearLayoutManager;
-    LinearLayout addOccasionLayout;
+    LinearLayout iconAddOccasion;
     RecyclerView categoryGiftRecycler;
     RecyclerView.Adapter categoryGiftAdapter;
     LinearLayoutManager categoryGiftLinearLayoutManager;
@@ -48,23 +48,16 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager holidayLinearLayoutManager;
 
     LinearLayout iconAddGift;
-    LinearLayout iconAddHoliday;
+
     LinearLayout iconAddPlanning;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addOccasionLayout = findViewById(R.id.iconAddOccasion);
+        iconAddOccasion = findViewById(R.id.iconAddOccasion);
 
         // Setup click listener for the LinearLayout
-        addOccasionLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Intent to start AddOccasionActivity
-                Intent intent = new Intent(MainActivity.this, AddOccasion.class);
-                startActivity(intent);
-            }
-        });
+
         // Hooks
         lovedGiftRecycler = findViewById(R.id.lovedGiftRecycler);
         categoryGiftRecycler = findViewById(R.id.categoryGiftRecycler);
@@ -72,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         iconAddGift = findViewById(R.id.iconAddGift);
-        iconAddHoliday = findViewById(R.id.iconAddOccasion);
+        iconAddOccasion = findViewById(R.id.iconAddOccasion);
         iconAddPlanning = findViewById(R.id.iconAddPlanning);
 
         // Listeners for Click Event
@@ -85,10 +78,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        iconAddHoliday.setOnClickListener(new View.OnClickListener() {
+        iconAddOccasion.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Adding a Holiday", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                // Intent to start AddOccasionActivity
+                Intent intent = new Intent(MainActivity.this, AddOccasion.class);
+                startActivity(intent);
             }
         });
 
