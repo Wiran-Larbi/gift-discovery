@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcipher.gift_discovery.R;
+import com.dotcipher.gift_discovery.utils.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,8 @@ public class LovedGiftAdapter extends RecyclerView.Adapter<LovedGiftAdapter.Love
     @Override
     public void onBindViewHolder(@NonNull LovedGiftViewHolder holder, int position) {
         LovedGiftHelper lovedGiftHelper = lovedGiftHelpers.get(position);
-        holder.image.setImageResource(lovedGiftHelper.getImage());
+        ImageUtils imageUtils = new ImageUtils();
+        holder.image.setImageResource(imageUtils.bitmapToInt(imageUtils.getBitmapFromByteArray(lovedGiftHelper.getImage())));
         holder.title.setText(lovedGiftHelper.getTitle());
         holder.description.setText(lovedGiftHelper.getDescription());
     }

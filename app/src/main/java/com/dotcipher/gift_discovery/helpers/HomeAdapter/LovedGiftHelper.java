@@ -2,20 +2,22 @@ package com.dotcipher.gift_discovery.helpers.HomeAdapter;
 
 public class LovedGiftHelper {
 
-    int image;
+    byte[] image;
     String title, description;
 
-    public LovedGiftHelper(int image, String title, String description) {
+    public LovedGiftHelper() {}
+
+    public LovedGiftHelper(byte[] image, String title, String description) {
         this.image = image;
         this.title = title;
         this.description = description;
     }
 
-    public int getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

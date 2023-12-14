@@ -9,8 +9,10 @@ public class GiftClass {
     private String occasion;
     private Bitmap image;
 
+    public GiftClass() {
+    }
 
-    public GiftClass(String title, String description, String category,String occasion, Bitmap image) {
+    public GiftClass(String title, String description, String category, String occasion, Bitmap image) {
         this.title = title;
         this.description = description;
         this.category = category;

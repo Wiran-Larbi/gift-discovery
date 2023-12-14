@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.dotcipher.gift_discovery.db.GiftDatabaseHelper;
 import com.dotcipher.gift_discovery.db.occasionsDB;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.CategoryGiftAdapter;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.CategoryGiftHelper;
@@ -153,13 +154,11 @@ public class MainActivity extends AppCompatActivity {
         lovedGiftRecycler.setHasFixedSize(true);
         lovedGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        ArrayList<LovedGiftHelper> lovedGiftHelpers = new ArrayList<>();
-        lovedGiftHelpers.add(new LovedGiftHelper(R.mipmap.fragrance_1_foreground,"Fragrance Black","Eau de parfum"));
-        lovedGiftHelpers.add(new LovedGiftHelper(R.mipmap.fragrance_1_foreground,"Fragrance Black","Eau de parfum"));
+        GiftDatabaseHelper giftDb = new GiftDatabaseHelper(this);
+
+        ArrayList<LovedGiftHelper> lovedGiftHelpers = giftDb.getTopGift();
 
 
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        //lovedGiftRecycler.setLayoutManager(layoutManager);
         lovedGiftLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
 
         lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);

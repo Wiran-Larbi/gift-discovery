@@ -157,7 +157,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/holidays_icon_text"
+                        android:text="@string/occasion_icon_text"
                         android:textAlignment="center"
                         android:textStyle="normal"
                         android:textColor="@color/text_secondary"

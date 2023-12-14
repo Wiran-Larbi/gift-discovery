@@ -2,6 +2,7 @@ package com.dotcipher.gift_discovery.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -10,9 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftHelper;
 import com.dotcipher.gift_discovery.model.GiftClass;
+import com.dotcipher.gift_discovery.utils.ImageUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GiftDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -48,40 +53,7 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /*
-    public void addGift(GiftClass giftToAdd){
-            try{
-                SQLiteDatabase db = this.getWritableDatabase();
-                ContentValues contentValues = new ContentValues();
 
-                // Extracting Image from Bitmap to Bytes
-                Bitmap imageBitmap = giftToAdd.getImage();
-                imageOutputStream = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,imageOutputStream);
-                imageInBytes = imageOutputStream.toByteArray();
-
-
-                contentValues.put(COLUMN_TITLE, giftToAdd.getTitle());
-                contentValues.put(COLUMN_DESCRIPTION, giftToAdd.getDescription());
-                contentValues.put(COLUMN_CATEGORY, giftToAdd.getCategory());
-                contentValues.put(COLUMN_IMAGE, imageInBytes);
-
-                long result = db.insert(TABLE_NAME, null, contentValues);
-                if (result == -1){
-                    Toast.makeText(context, "Failed To insert Gift ..", Toast.LENGTH_SHORT).show();
-                    Log.d("INSERT FAILED", "Failed to insert Gift to Table Db");
-                }else {
-                    Toast.makeText(context, "Successfully inserted Gift ..", Toast.LENGTH_SHORT).show();
-                    Log.d("INSERT SUCCESSFULLY", "Successfully inserted Gift");
-                    db.close();
-                }
-
-            }catch(Exception exception){
-                Toast.makeText(context, "Problem With Inserting in DB", Toast.LENGTH_SHORT).show();
-                Log.d("PROBLEM TABLE INSERT", "PROBLEM : " + exception.getMessage());
-            }
-    }
-    */
     public void addGift(GiftClass giftToAdd) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -124,5 +96,44 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Problem With Inserting in DB", Toast.LENGTH_SHORT).show();
             Log.e("PROBLEM_TABLE_INSERT", "PROBLEM : " + exception.getMessage());
         }
+    }
+
+    public ArrayList<LovedGiftHelper> getTopGift(){
+
+        try{
+            ArrayList<LovedGiftHelper> gifts = new ArrayList<>();
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    LovedGiftHelper gift = new LovedGiftHelper();
+                    gift.setTitle(cursor.getString(1));
+                    gift.setDescription(cursor.getString(2));
+                    gift.setImage(cursor.getBlob(3));
+
+                    gifts.add(gift);
+                } while (cursor.moveToNext());
+
+                ArrayList<LovedGiftHelper> topGifts = new ArrayList<>();
+                if (gifts != null && gifts.size() >= 5) {
+                    for (int i = 0; i < 5; i++){
+                        topGifts.add(gifts.get(i));
+                    }
+                }
+
+                return topGifts;
+
+
+            }
+                cursor.close();
+
+        }catch(Exception exception) {
+                Log.d("ERROR DISPLAY","Error Displaying Gifts");
+
+        }
+
+        return new ArrayList<LovedGiftHelper>();
     }
 }
