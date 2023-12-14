@@ -100,8 +100,8 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<LovedGiftHelper> getTopGift(){
 
-        try{
             ArrayList<LovedGiftHelper> gifts = new ArrayList<>();
+        try{
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
@@ -122,7 +122,7 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
                         topGifts.add(gifts.get(i));
                     }
                 }
-
+                gifts = topGifts;
                 return topGifts;
 
 
@@ -133,7 +133,6 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
                 Log.d("ERROR DISPLAY","Error Displaying Gifts");
 
         }
-
-        return new ArrayList<LovedGiftHelper>();
+        return gifts;
     }
 }

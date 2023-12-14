@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         lovedGiftLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-
+        Log.d("Loved Gifts",lovedGiftHelpers.toString());
         lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
         lovedGiftRecycler.setAdapter(lovedGiftAdapter);
         lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
