@@ -22,7 +22,7 @@ import java.util.List;
 public class GiftDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String DATABASE_NAME = "gift_discovery.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "gift";
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_TITLE = "gift_title";
