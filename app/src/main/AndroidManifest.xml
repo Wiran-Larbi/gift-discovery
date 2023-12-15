@@ -30,6 +30,10 @@
         <activity
         android:name=".AddOccasion"
         android:exported="false" />
+        <activity
+            android:name=".OccasionActivity"
+            android:exported="false" />
+
 
 
 
