@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView categoryGiftRecycler;
     RecyclerView.Adapter categoryGiftAdapter;
     LinearLayoutManager categoryGiftLinearLayoutManager;
-
+    RecyclerView occasionRecycler;
+    OccasionAdapter occasionAdapter;
     RecyclerView holidayRecycler;
     RecyclerView.Adapter holidayAdapter;
     LinearLayoutManager holidayLinearLayoutManager;
@@ -113,15 +114,12 @@ public class MainActivity extends AppCompatActivity {
         loadOccasionsFromDatabase();
     }
     private void loadOccasionsFromDatabase() {
-        // Create instance of DatabaseHelper
+
         occasionsDB db = new occasionsDB(this);
-
-        // Fetch the list of occasions from the database
         List<OccasionHelper> occasionHelpers = db.getAllOccasions();
-
-        // Set the adapter with the fetched data
-        holidayAdapter = new OccasionAdapter(MainActivity.this, occasionHelpers);
-        holidayRecycler.setAdapter(holidayAdapter);
+        occasionAdapter = new OccasionAdapter(MainActivity.this, occasionHelpers, this);
+        occasionRecycler.setLayoutManager(new LinearLayoutManager(this));
+        occasionRecycler.setAdapter(occasionAdapter);
     }
     private void categoryGiftRecyclerFill(){
         categoryGiftRecycler.setHasFixedSize(true);
