@@ -20,6 +20,7 @@
             android:src="@mipmap/fragrance_1"
             android:scaleType="centerCrop"
             android:layout_marginBottom="@dimen/_12ssp"
+
             />
 
         <TextView
@@ -30,7 +31,9 @@
             android:text="Fragrance Black"
             android:textColor="@color/text_primary"
             android:textSize="@dimen/_14ssp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginLeft="4dp"
+            />
 
         <TextView
             android:id="@+id/gift_card_description"
@@ -41,6 +44,7 @@
             android:textStyle="italic"
             android:textColor="@color/text_secondary"
             android:layout_marginBottom="@dimen/_4ssp"
+            android:layout_marginLeft="4dp"
             />
 
         <RatingBar
@@ -48,6 +52,7 @@
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:rating="4" />
 
     </LinearLayout>
