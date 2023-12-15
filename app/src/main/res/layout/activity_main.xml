@@ -310,7 +310,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/OccasionRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"/>
+                    android:layout_height="140dp"
+                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

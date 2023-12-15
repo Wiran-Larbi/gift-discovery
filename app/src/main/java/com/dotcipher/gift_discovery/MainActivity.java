@@ -64,19 +64,6 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
         });
         occasionsDB db = new occasionsDB(this);
 
-        /*
-        Intent intent = getIntent();
-        if (intent != null){
-            ArrayList<LovedGiftHelper> topGifts = (ArrayList<LovedGiftHelper>) intent.getSerializableExtra("topGifts");
-                //Log.d("Loved Gifts", topGifts.toString());
-
-            if(topGifts != null && topGifts.size() != 0) {
-                lovedGiftRecyclerFill(topGifts);
-            }
-        }else{
-        }
-
-         */
 
         lovedGiftRecyclerFill(null);
         categoryGiftRecyclerFill();
@@ -84,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
 
         // Initialize RecyclerView
 
-        occasionRecycler.setHasFixedSize(true);
-        occassionLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        occasionRecycler.setLayoutManager(occassionLinearLayoutManager);
 
+
+        occasionsDB dbOccassion = new occasionsDB(this);
+        dbOccassion.addSampleData();
         // Load data from database and set adapter
         loadOccasionsFromDatabase();
         // Set up click listeners for LinearLayouts
@@ -147,8 +134,11 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
     private void loadOccasionsFromDatabase() {
         occasionsDB db = new occasionsDB(this);
         List<OccasionHelper> occasionHelpers = db.getAllOccasions();
+
+        occasionRecycler.setHasFixedSize(true);
+        occassionLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         occasionAdapter = new OccasionAdapter(MainActivity.this, occasionHelpers, this);
-        occasionRecycler.setLayoutManager(new LinearLayoutManager(this));
+        occasionRecycler.setLayoutManager(occassionLinearLayoutManager);
         occasionRecycler.setAdapter(occasionAdapter);
     }
     private void categoryGiftRecyclerFill(){
