@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
+    android:layout_width="match_parent"
     android:layout_height="280dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp"
     app:cardBackgroundColor="@color/text_contrast"
     app:cardUseCompatPadding="true"
     >
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="8dp"
+        android:orientation="vertical"
 
         >
         <ImageView
             android:id="@+id/gift_card_image"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_height="140dp"
             android:src="@mipmap/fragrance_1"
             android:scaleType="centerCrop"
@@ -25,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fragrance Black"
+            android:layout_gravity="center"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
@@ -35,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Eau de Parfum"
+            android:layout_gravity="center"
             android:textSize="@dimen/_8ssp"
             android:textStyle="italic"
             android:textColor="@color/text_secondary"
@@ -45,11 +50,13 @@
             android:id="@+id/gift_card_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:rating="4"
+            android:rating="4.5"
+            android:layout_gravity="center"
+
             style="@style/Widget.AppCompat.RatingBar.Small"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

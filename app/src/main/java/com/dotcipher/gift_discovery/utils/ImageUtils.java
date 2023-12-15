@@ -11,15 +11,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ImageUtils {
+    private static Bitmap resizeBitmap(Bitmap originalBitmap, int width, int height) {
+        return Bitmap.createScaledBitmap(originalBitmap, width, height, false);
+    }
+
     public static byte[] getImageByteArray(Context context, int drawableResourceId) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawableResourceId);
         if (bitmap == null) {
-            // Handle the case where the bitmap is null
             Log.e("ImageUtils", "Bitmap is null for resource ID: " + drawableResourceId);
-            return null; // or handle it some other way
+            return null;
         }
+
+        // Resize the bitmap
+        Bitmap resizedBitmap = resizeBitmap(bitmap, 500, 500); // You can adjust the size
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         byte[] byteArray = outputStream.toByteArray();
 
         try {
@@ -30,15 +37,26 @@ public class ImageUtils {
 
         return byteArray;
     }
+
     public static byte[] getByteArrayFromBitmap(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+
+        // Resize the bitmap
+        Bitmap resizedBitmap = resizeBitmap(bitmap, 500, 500); // You can adjust the size
+
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
     }
 
     public static Bitmap getBitmapFromByteArray(byte[] byteArrayImage) {
         if (byteArrayImage != null && byteArrayImage.length > 0) {
-            return BitmapFactory.decodeByteArray(byteArrayImage, 0, byteArrayImage.length);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArrayImage, 0, byteArrayImage.length);
+
+            // Resize the bitmap
+            return resizeBitmap(bitmap, 500, 500); // You can adjust the size
         }
         return null;
     }

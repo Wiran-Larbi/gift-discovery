@@ -21,66 +21,31 @@ import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftAdapter;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftHelper;
 
 import java.util.ArrayList;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
-
-
-
-    RecyclerView lovedGiftRecycler;
+public class MainActivity extends AppCompatActivity implements OccasionAdapter.OccasionClickListener {
     RecyclerView.Adapter lovedGiftAdapter;
     LinearLayoutManager lovedGiftLinearLayoutManager;
-    LinearLayout iconAddOccasion;
-    RecyclerView categoryGiftRecycler;
     RecyclerView.Adapter categoryGiftAdapter;
     LinearLayoutManager categoryGiftLinearLayoutManager;
+    RecyclerView lovedGiftRecycler, categoryGiftRecycler, occasionRecycler;
+    OccasionAdapter occasionAdapter;
+    LinearLayoutManager occassionLinearLayoutManager;
 
-    RecyclerView holidayRecycler;
-    RecyclerView.Adapter holidayAdapter;
-    LinearLayoutManager holidayLinearLayoutManager;
-
-    LinearLayout iconAddGift;
-
-    LinearLayout iconAddPlanning;
-
+    LinearLayout iconAddGift, iconAddOccasion, iconAddPlanning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        iconAddOccasion = findViewById(R.id.iconAddOccasion);
 
-        // Setup click listener for the LinearLayout
-
-        // Hooks
-        lovedGiftRecycler = findViewById(R.id.lovedGiftRecycler);
-        categoryGiftRecycler = findViewById(R.id.categoryGiftRecycler);
-        holidayRecycler = findViewById(R.id.holidayRecycler);
-
-
+        // Initialize LinearLayouts
         iconAddGift = findViewById(R.id.iconAddGift);
         iconAddOccasion = findViewById(R.id.iconAddOccasion);
         iconAddPlanning = findViewById(R.id.iconAddPlanning);
 
-        // Listeners for Click Event
-        iconAddGift.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "Adding a Gift", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, AddGiftActivity.class);
-                startActivity(intent);
-            }
-        });
+        // Set up RecyclerViews
+        setupRecyclerViews();
 
         iconAddOccasion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,56 +84,107 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize RecyclerView
 
-        holidayRecycler.setHasFixedSize(true);
-        holidayLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        holidayRecycler.setLayoutManager(holidayLinearLayoutManager);
+        occasionRecycler.setHasFixedSize(true);
+        occassionLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        occasionRecycler.setLayoutManager(occassionLinearLayoutManager);
 
         // Load data from database and set adapter
         loadOccasionsFromDatabase();
+        // Set up click listeners for LinearLayouts
+        setUpClickListeners();
     }
+
+    private void setUpClickListeners() {
+        iconAddGift.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddGiftActivity.class);
+            startActivity(intent);
+        });
+
+        iconAddOccasion.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddOccasion.class);
+            startActivity(intent);
+        });
+
+        iconAddPlanning.setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this, "Adding a Planning", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void setupRecyclerViews() {
+        lovedGiftRecycler = findViewById(R.id.lovedGiftRecycler);
+        categoryGiftRecycler = findViewById(R.id.categoryGiftRecycler);
+        occasionRecycler = findViewById(R.id.OccasionRecycler);
+
+        if (occasionRecycler != null) {
+            loadOccasionsFromDatabase();
+        } else {
+            Log.e("MainActivity", "occasionRecycler not found");
+        }
+
+        if (categoryGiftRecycler != null) {
+            categoryGiftRecyclerFill();
+        } else {
+            Log.e("MainActivity", "categoryGiftRecycler not found");
+        }
+
+        if (lovedGiftRecycler != null) {
+            lovedGiftRecyclerFill(null);
+        } else {
+            Log.e("MainActivity", "lovedGiftRecycler not found");
+        }
+    }
+
+    @Override
+    public void onOccasionClick(OccasionHelper occasion) {
+        Intent intent = new Intent(MainActivity.this, OccasionActivity.class);
+        intent.putExtra("OCCASION_NAME", occasion.getName());
+        intent.putExtra("OCCASION_DESCRIPTION", occasion.getDescription());
+        intent.putExtra("OCCASION_IMAGE", occasion.getImage());
+        startActivity(intent);
+    }
+
+
     private void loadOccasionsFromDatabase() {
-        // Create instance of DatabaseHelper
         occasionsDB db = new occasionsDB(this);
-
-        // Fetch the list of occasions from the database
         List<OccasionHelper> occasionHelpers = db.getAllOccasions();
-
-        // Set the adapter with the fetched data
-        holidayAdapter = new OccasionAdapter(MainActivity.this, occasionHelpers);
-        holidayRecycler.setAdapter(holidayAdapter);
+        occasionAdapter = new OccasionAdapter(MainActivity.this, occasionHelpers, this);
+        occasionRecycler.setLayoutManager(new LinearLayoutManager(this));
+        occasionRecycler.setAdapter(occasionAdapter);
     }
     private void categoryGiftRecyclerFill(){
-        categoryGiftRecycler.setHasFixedSize(true);
-        categoryGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
+        if (categoryGiftRecycler != null) {
+            categoryGiftRecycler.setHasFixedSize(true);
+            categoryGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
 
 
-        ArrayList<CategoryGiftHelper> categoryGiftHelpers = new ArrayList<>();
+            ArrayList<CategoryGiftHelper> categoryGiftHelpers = new ArrayList<>();
 
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.electronics,"Electronics"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.books,"Books"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.fashion_accessories,"Fashion & Accessories"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.toys_games,"Toys & Games"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.beauty,"Beauty & Personal Care"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.sports_outdoor,"Sports & Outdoors"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.food_organic,"Food & Beverages"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.diy,"Diy & Craft"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.subscribtion,"Subscription Boxes"));
-        categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.home_kitchen,"Home & Kitchen"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.electronics,"Electronics"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.books,"Books"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.fashion_accessories,"Fashion & Accessories"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.toys_games,"Toys & Games"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.beauty,"Beauty & Personal Care"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.sports_outdoor,"Sports & Outdoors"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.food_organic,"Food & Beverages"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.diy,"Diy & Craft"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.subscribtion,"Subscription Boxes"));
+            categoryGiftHelpers.add(new CategoryGiftHelper(R.drawable.home_kitchen,"Home & Kitchen"));
 
-        categoryGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
+            categoryGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
 
-        categoryGiftAdapter = new CategoryGiftAdapter(MainActivity.this,categoryGiftHelpers);
-        categoryGiftRecycler.setAdapter(categoryGiftAdapter);
-        categoryGiftRecycler.setLayoutManager(categoryGiftLinearLayoutManager);
+            categoryGiftAdapter = new CategoryGiftAdapter(MainActivity.this,categoryGiftHelpers);
+            categoryGiftRecycler.setAdapter(categoryGiftAdapter);
+            categoryGiftRecycler.setLayoutManager(categoryGiftLinearLayoutManager);
+        } else {
+            Log.e("MainActivity", "RecyclerView not found");
+        }
+
 
 
     }
 
     private void lovedGiftRecyclerFill(ArrayList<LovedGiftHelper> filler){
-
-
-        lovedGiftRecycler.setHasFixedSize(true);
-        lovedGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
+            lovedGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         /*if (filler != null){
             Log.d("FILLER", filler.toString());
@@ -185,20 +201,17 @@ public class MainActivity extends AppCompatActivity {
 
             lovedGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-<<<<<<< HEAD
+
         lovedGiftLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         Log.d("Loved Gifts",lovedGiftHelpers.toString());
         lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
         lovedGiftRecycler.setAdapter(lovedGiftAdapter);
         lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
 
-=======
-            lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
-            lovedGiftRecycler.setAdapter(lovedGiftAdapter);
-            lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
-      //  }
->>>>>>> dev-larbi-category
     }
+
+
+
 
 
 

@@ -7,12 +7,12 @@ public class GiftClass {
     private String description;
     private String category;
     private String occasion;
-    private Bitmap image;
+    private byte[] image;
 
     public GiftClass() {
     }
 
-    public GiftClass(String title, String description, String category, String occasion, Bitmap image) {
+    public GiftClass(String title, String description, String category, String occasion, byte[] image) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -63,11 +63,11 @@ public class GiftClass {
         this.category = category;
     }
 
-    public Bitmap getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

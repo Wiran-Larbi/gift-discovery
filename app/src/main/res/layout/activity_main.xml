@@ -273,13 +273,7 @@
                         android:textAllCaps="true"
                         android:layout_centerVertical="true"
                         />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/view_all"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        />
+
 
                 </RelativeLayout>
 
@@ -309,18 +303,12 @@
                         android:textAllCaps="true"
                         android:layout_centerVertical="true"
                         />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/view_all"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        />
+
 
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/holidayRecycler"
+                    android:id="@+id/OccasionRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"/>
             </LinearLayout>
