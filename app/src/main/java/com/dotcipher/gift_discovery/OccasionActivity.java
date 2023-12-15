@@ -37,7 +37,7 @@ public class OccasionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_occasions);
         System.out.println("OccasionsActivity onCreate executed");
         // Initialize views
-        occasionImageView = findViewById(R.id.occasionImageView);
+        //occasionImageView = findViewById(R.id.occasionImageView);
         occasionNameTextView = findViewById(R.id.occasionNameTextView);
         occasionDescriptionTextView = findViewById(R.id.occasionDescriptionTextView);
         relatedGiftsRecyclerView = findViewById(R.id.relatedGiftsRecyclerView);
@@ -49,12 +49,12 @@ public class OccasionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String occasionName = intent.getStringExtra("OCCASION_NAME");
         String occasionDescription = intent.getStringExtra("OCCASION_DESCRIPTION");
-        byte[] occasionImageBytes = intent.getByteArrayExtra("OCCASION_IMAGE");
+       // byte[] occasionImageBytes = intent.getByteArrayExtra("OCCASION_IMAGE");
 
         // Set occasion data to views
-        if (occasionImageBytes != null) {
-            occasionImageView.setImageBitmap(BitmapFactory.decodeByteArray(occasionImageBytes, 0, occasionImageBytes.length));
-        }
+
+            //occasionImageView.setImageBitmap(BitmapFactory.decodeByteArray(occasionImageBytes, 0, occasionImageBytes.length));
+
         occasionNameTextView.setText(occasionName);
         occasionDescriptionTextView.setText(occasionDescription);
 
