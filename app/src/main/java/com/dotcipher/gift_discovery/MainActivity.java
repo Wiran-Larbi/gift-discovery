@@ -168,6 +168,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onOccasionClick(OccasionHelper occasion) {
+        Intent intent = new Intent(MainActivity.this, OccasionActivity.class);
+        intent.putExtra("OCCASION_NAME", occasion.getName());
+        intent.putExtra("OCCASION_DESCRIPTION", occasion.getDescription());
+        intent.putExtra("OCCASION_IMAGE", occasion.getImage());
+        startActivity(intent);
+    }
+
+
 
 
 }
