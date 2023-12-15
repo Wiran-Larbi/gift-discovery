@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         // Hooks
         lovedGiftRecycler = findViewById(R.id.lovedGiftRecycler);
         categoryGiftRecycler = findViewById(R.id.categoryGiftRecycler);
-        holidayRecycler = findViewById(R.id.holidayRecycler);
+        occasionRecycler = findViewById(R.id.OccasionRecycler);
 
 
         iconAddGift = findViewById(R.id.iconAddGift);
