@@ -1,6 +1,7 @@
 package com.dotcipher.gift_discovery.helpers.HomeAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -8,42 +9,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.dotcipher.gift_discovery.R;
 
-import java.util.ArrayList;
+import com.dotcipher.gift_discovery.OccasionActivity;
+
 import java.util.List;
-import java.util.Random;
-
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.dotcipher.gift_discovery.R;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 public class OccasionAdapter extends RecyclerView.Adapter<OccasionAdapter.OccasionViewHolder> {
     private final Context context;
     private final List<OccasionHelper> occasionHelpers;
+    private OccasionClickListener listener;
 
-    public OccasionAdapter(Context context, List<OccasionHelper> occasionHelpers) {
+    public OccasionAdapter(Context context, List<OccasionHelper> occasionHelpers, OccasionClickListener listener) {
         this.context = context;
         this.occasionHelpers = occasionHelpers;
+        this.listener = listener;
+    }
+
+    public interface OccasionClickListener {
+        void onOccasionClick(OccasionHelper occasion);
     }
 
     @NonNull
@@ -57,14 +46,10 @@ public class OccasionAdapter extends RecyclerView.Adapter<OccasionAdapter.Occasi
     public void onBindViewHolder(@NonNull OccasionViewHolder holder, int position) {
         OccasionHelper occasionHelper = occasionHelpers.get(position);
         if (occasionHelper.getImage() != null) {
-            // Convert byte array to Bitmap
             byte[] imageBytes = occasionHelper.getImage();
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-
-        // Set Bitmap to ImageView
-        holder.image.setImageBitmap(bitmap);
-        }
-        else {
+            holder.image.setImageBitmap(bitmap);
+        } else {
             holder.image.setImageResource(R.drawable.holidays);
         }
         holder.title.setText(occasionHelper.getName());
@@ -72,13 +57,12 @@ public class OccasionAdapter extends RecyclerView.Adapter<OccasionAdapter.Occasi
         holder.cardLayout.setCardBackgroundColor(randomColor);
     }
 
-
     @Override
     public int getItemCount() {
         return occasionHelpers.size();
     }
 
-    public static class OccasionViewHolder extends RecyclerView.ViewHolder {
+    public class OccasionViewHolder extends RecyclerView.ViewHolder {
         CardView cardLayout;
         ImageView image;
         TextView title;
@@ -86,17 +70,25 @@ public class OccasionAdapter extends RecyclerView.Adapter<OccasionAdapter.Occasi
 
         public OccasionViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Hooks
             image = itemView.findViewById(R.id.holidayImage);
             title = itemView.findViewById(R.id.holidayTitle);
             cardLayout = itemView.findViewById(R.id.holidayCardLayout);
             randomInt = new Random();
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onOccasionClick(occasionHelpers.get(position));
+                    }
+                }
+            });
         }
 
         public int randomCardBackgroundColor(Context context) {
-            int value = randomInt.nextInt(5) + 1; // Simplified to use only 5 colors as an example
-            int colorId = R.color.card_5; // Default color
-
+            int value = randomInt.nextInt(5) + 1;
+            int colorId = R.color.card_5;
             switch (value) {
                 case 1:
                     colorId = R.color.card_1;

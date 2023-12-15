@@ -67,15 +67,11 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
 
             // Extracting Image from Bitmap to Bytes
-            Bitmap imageBitmap = giftToAdd.getImage();
-            if (imageBitmap != null) {
-                imageOutputStream = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutputStream);
-                imageInBytes = imageOutputStream.toByteArray();
+            byte[] imageInBytes = giftToAdd.getImage();
+            if (imageInBytes != null) {
                 contentValues.put(COLUMN_IMAGE, imageInBytes);
             } else {
-                Log.e("IMAGE_NULL", "Image bitmap is null.");
-                // You might want to handle this case appropriately
+                Log.e("IMAGE_NULL", "Image is null.");
             }
 
             contentValues.put(COLUMN_TITLE, giftToAdd.getTitle());
@@ -134,5 +130,69 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
 
         }
         return gifts;
+    }
+    public List<GiftClass> getAllGifts() {
+        List<GiftClass> giftList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                GiftClass gift = new GiftClass();
+                gift.setTitle(cursor.getString(1));
+                gift.setDescription(cursor.getString(2));
+                gift.setCategory(cursor.getString(3));
+                gift.setImage(cursor.getBlob(4));
+                giftList.add(gift);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return giftList;
+    }
+    public List<GiftClass> getGiftsByCategory(String category) {
+        List<GiftClass> giftList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_CATEGORY + "=?", new String[] {category});
+
+        if (cursor.moveToFirst()) {
+            do {
+                GiftClass gift = new GiftClass();
+                gift.setTitle(cursor.getString(1));
+                gift.setDescription(cursor.getString(2));
+                gift.setCategory(cursor.getString(3));
+                gift.setImage(cursor.getBlob(4));
+                giftList.add(gift);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return giftList;
+    }
+    public List<GiftClass> getGiftsByOccasion(String occasion) {
+        List<GiftClass> giftList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_OCCASION + "=?", new String[] {occasion});
+
+        if (cursor.moveToFirst()) {
+            do {
+                GiftClass gift = new GiftClass();
+                gift.setTitle(cursor.getString(1));
+                gift.setDescription(cursor.getString(2));
+                gift.setCategory(cursor.getString(3));
+                gift.setOccasion(cursor.getString(4)); // Assuming you have a setter for occasion
+                gift.setImage(cursor.getBlob(5)); // Adjust the index accordingly
+                giftList.add(gift);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return giftList;
     }
 }

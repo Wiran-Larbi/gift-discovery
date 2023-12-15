@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.dotcipher.gift_discovery.db.GiftDatabaseHelper;
 import com.dotcipher.gift_discovery.model.GiftClass;
+import com.dotcipher.gift_discovery.utils.ImageUtils;
 
 public class AddGiftActivity extends AppCompatActivity {
 
@@ -119,7 +120,13 @@ public class AddGiftActivity extends AppCompatActivity {
         }
     }
 
-    public void storeGiftLocally(String title, String description, String category, String occasion, Bitmap image){
-        this.giftClass = new GiftClass(title, description, category, occasion, image);
+    public void storeGiftLocally(String title, String description, String category, String occasion, Bitmap image) {
+        if (image != null) {
+            byte[] imageBytes = ImageUtils.getByteArrayFromBitmap(image);
+            this.giftClass = new GiftClass(title, description, category, occasion, imageBytes);
+        } else {
+            // Handle the case where there is no image
+            this.giftClass = new GiftClass(title, description, category, occasion, null);
+        }
     }
 }
