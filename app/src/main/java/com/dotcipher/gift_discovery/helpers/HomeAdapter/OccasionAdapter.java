@@ -63,8 +63,7 @@ public class OccasionAdapter extends RecyclerView.Adapter<OccasionAdapter.Occasi
 
         // Set Bitmap to ImageView
         holder.image.setImageBitmap(bitmap);
-        }
-        else {
+        } else {
             holder.image.setImageResource(R.drawable.holidays);
         }
         holder.title.setText(occasionHelper.getName());

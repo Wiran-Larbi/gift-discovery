@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout iconAddGift;
 
     LinearLayout iconAddPlanning;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +99,21 @@ public class MainActivity extends AppCompatActivity {
         });
         occasionsDB db = new occasionsDB(this);
 
+        /*
+        Intent intent = getIntent();
+        if (intent != null){
+            ArrayList<LovedGiftHelper> topGifts = (ArrayList<LovedGiftHelper>) intent.getSerializableExtra("topGifts");
+                //Log.d("Loved Gifts", topGifts.toString());
 
+            if(topGifts != null && topGifts.size() != 0) {
+                lovedGiftRecyclerFill(topGifts);
+            }
+        }else{
+        }
 
-        lovedGiftRecyclerFill();
+         */
+
+        lovedGiftRecyclerFill(null);
         categoryGiftRecyclerFill();
 
 
@@ -149,22 +164,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void lovedGiftRecyclerFill(){
+    private void lovedGiftRecyclerFill(ArrayList<LovedGiftHelper> filler){
+
 
         lovedGiftRecycler.setHasFixedSize(true);
         lovedGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        GiftDatabaseHelper giftDb = new GiftDatabaseHelper(this);
+        /*if (filler != null){
+            Log.d("FILLER", filler.toString());
+            lovedGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        ArrayList<LovedGiftHelper> lovedGiftHelpers = giftDb.getTopGift();
+            lovedGiftAdapter = new LovedGiftAdapter(filler);
+            lovedGiftRecycler.setAdapter(lovedGiftAdapter);
+            lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
+        */
+    //} else {
+            GiftDatabaseHelper giftDb = new GiftDatabaseHelper(this);
+            ArrayList<LovedGiftHelper> lovedGiftHelpers = giftDb.getTopGift();
+            Log.d("TOP GIFTS", lovedGiftHelpers.toString());
 
+            lovedGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        lovedGiftLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-
-        lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
-        lovedGiftRecycler.setAdapter(lovedGiftAdapter);
-        lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
-
+            lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
+            lovedGiftRecycler.setAdapter(lovedGiftAdapter);
+            lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
+      //  }
     }
 
 

@@ -70,7 +70,7 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
             Bitmap imageBitmap = giftToAdd.getImage();
             if (imageBitmap != null) {
                 imageOutputStream = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageOutputStream);
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 50, imageOutputStream);
                 imageInBytes = imageOutputStream.toByteArray();
                 contentValues.put(COLUMN_IMAGE, imageInBytes);
             } else {
@@ -98,42 +98,37 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<LovedGiftHelper> getTopGift(){
+    public ArrayList<LovedGiftHelper> getTopGift() {
+        ArrayList<LovedGiftHelper> topGifts = new ArrayList<>();
+        ArrayList<LovedGiftHelper> allGifts = new ArrayList<>();
 
-        try{
-            ArrayList<LovedGiftHelper> gifts = new ArrayList<>();
-            SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-
-
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    LovedGiftHelper gift = new LovedGiftHelper();
-                    gift.setTitle(cursor.getString(1));
-                    gift.setDescription(cursor.getString(2));
-                    gift.setImage(cursor.getBlob(3));
-
-                    gifts.add(gift);
-                } while (cursor.moveToNext());
-
-                ArrayList<LovedGiftHelper> topGifts = new ArrayList<>();
-                if (gifts != null && gifts.size() >= 5) {
-                    for (int i = 0; i < 5; i++){
-                        topGifts.add(gifts.get(i));
-                    }
-                }
-
-                return topGifts;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + COLUMN_TITLE + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_IMAGE +" FROM " + TABLE_NAME, null);
+        int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
+        int descriptionIndex = cursor.getColumnIndex(COLUMN_DESCRIPTION);
+        int imageIndex = cursor.getColumnIndex(COLUMN_IMAGE);
 
 
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                LovedGiftHelper gift = new LovedGiftHelper();
+                gift.setTitle(cursor.getString(titleIndex));
+                gift.setDescription(cursor.getString(descriptionIndex));
+                gift.setImage(cursor.getBlob(imageIndex));
+
+                allGifts.add(gift);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+            int numGifts = allGifts.size();
+            int limit = Math.min(numGifts, 5); // Handle cases where there are fewer than 5 gifts
+            for (int i = 0; i < limit; i++) {
+                topGifts.add(allGifts.get(i));
             }
-                cursor.close();
-
-        }catch(Exception exception) {
-                Log.d("ERROR DISPLAY","Error Displaying Gifts");
-
         }
 
-        return new ArrayList<LovedGiftHelper>();
+        return topGifts;
     }
+
 }

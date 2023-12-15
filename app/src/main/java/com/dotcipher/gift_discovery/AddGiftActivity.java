@@ -19,7 +19,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dotcipher.gift_discovery.db.GiftDatabaseHelper;
+import com.dotcipher.gift_discovery.helpers.HomeAdapter.LovedGiftHelper;
 import com.dotcipher.gift_discovery.model.GiftClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddGiftActivity extends AppCompatActivity {
 
@@ -34,6 +38,7 @@ public class AddGiftActivity extends AppCompatActivity {
     private Bitmap imageToStore;
 
     GiftClass giftClass;
+    ArrayList<LovedGiftHelper> topGifts;
 
     GiftDatabaseHelper db;
 
@@ -83,6 +88,15 @@ public class AddGiftActivity extends AppCompatActivity {
                     // finally adding our gift to DB
                     Toast.makeText(AddGiftActivity.this, "Add gift", Toast.LENGTH_SHORT).show();
                     db.addGift(giftClass);
+
+                    // Fetching all gifts from db after being successfully inserted
+                    topGifts = db.getTopGift();
+
+                    // Creating an intent to send the recently added gift to MainActivity
+                    Intent intent = new Intent(AddGiftActivity.this, MainActivity.class);
+                    intent.putExtra("topGifts", new ArrayList<>(topGifts));
+
+                    startActivity(intent);
                 }
             });
 
