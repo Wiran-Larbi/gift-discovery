@@ -67,6 +67,8 @@
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:hint="Gift Title"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_secondary"
             />
 
         <EditText
@@ -75,6 +77,8 @@
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
             android:hint="Gift Description"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_secondary"
             />
 
 
@@ -85,6 +89,7 @@
                 android:background="@android:drawable/btn_dropdown"
                 android:layout_marginTop="12dp"
                 android:spinnerMode="dialog"
+                android:textColorHint="@color/text_secondary"
                 />
 
                <EditText
@@ -93,6 +98,8 @@
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
             android:hint="Gift Occasion"
+                   android:textColor="@color/black"
+                   android:textColorHint="@color/text_secondary"
             />
 
         <Button

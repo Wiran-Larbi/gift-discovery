@@ -1,5 +1,8 @@
 package com.dotcipher.gift_discovery.helpers.HomeAdapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +37,41 @@ public class LovedGiftAdapter extends RecyclerView.Adapter<LovedGiftAdapter.Love
     @Override
     public void onBindViewHolder(@NonNull LovedGiftViewHolder holder, int position) {
         LovedGiftHelper lovedGiftHelper = lovedGiftHelpers.get(position);
-        ImageUtils imageUtils = new ImageUtils();
-        holder.image.setImageResource(imageUtils.bitmapToInt(imageUtils.getBitmapFromByteArray(lovedGiftHelper.getImage())));
+
+        if (lovedGiftHelper.getImage() != null){
+            // Converting Byte array to Bitmap
+            byte[] imageBytes = lovedGiftHelper.getImage();
+            Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+            // Set Bitmap to ImageView
+            if (imageBitmap != null){
+                holder.image.setImageBitmap(imageBitmap);
+            } else {
+                holder.image.setImageResource(R.drawable.anniversary_foreground);
+            }
+            //Log.d("BITMAP", imageBitmap.toString());
+        }
+        //ImageUtils imageUtils = new ImageUtils();
+        //holder.image.setImageResource(imageUtils.bitmapToInt(imageUtils.getBitmapFromByteArray(lovedGiftHelper.getImage())));
         holder.title.setText(lovedGiftHelper.getTitle());
         holder.description.setText(lovedGiftHelper.getDescription());
+
+        /*
+          OccasionHelper occasionHelper = occasionHelpers.get(position);
+        if (occasionHelper.getImage() != null) {
+            // Convert byte array to Bitmap
+            byte[] imageBytes = occasionHelper.getImage();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+        // Set Bitmap to ImageView
+        holder.image.setImageBitmap(bitmap);
+        } else {
+            holder.image.setImageResource(R.drawable.holidays);
+        }
+        holder.title.setText(occasionHelper.getName());
+        int randomColor = holder.randomCardBackgroundColor(context);
+        holder.cardLayout.setCardBackgroundColor(randomColor);
+         */
     }
 
     @Override

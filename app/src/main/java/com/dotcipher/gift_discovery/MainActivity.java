@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout iconAddGift;
 
     LinearLayout iconAddPlanning;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +99,21 @@ public class MainActivity extends AppCompatActivity {
         });
         occasionsDB db = new occasionsDB(this);
 
+        /*
+        Intent intent = getIntent();
+        if (intent != null){
+            ArrayList<LovedGiftHelper> topGifts = (ArrayList<LovedGiftHelper>) intent.getSerializableExtra("topGifts");
+                //Log.d("Loved Gifts", topGifts.toString());
 
+            if(topGifts != null && topGifts.size() != 0) {
+                lovedGiftRecyclerFill(topGifts);
+            }
+        }else{
+        }
 
-        lovedGiftRecyclerFill();
+         */
+
+        lovedGiftRecyclerFill(null);
         categoryGiftRecyclerFill();
 
 
@@ -150,22 +164,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void lovedGiftRecyclerFill(){
+    private void lovedGiftRecyclerFill(ArrayList<LovedGiftHelper> filler){
+
 
         lovedGiftRecycler.setHasFixedSize(true);
         lovedGiftRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        GiftDatabaseHelper giftDb = new GiftDatabaseHelper(this);
+        /*if (filler != null){
+            Log.d("FILLER", filler.toString());
+            lovedGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-        ArrayList<LovedGiftHelper> lovedGiftHelpers = giftDb.getTopGift();
+            lovedGiftAdapter = new LovedGiftAdapter(filler);
+            lovedGiftRecycler.setAdapter(lovedGiftAdapter);
+            lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
+        */
+    //} else {
+            GiftDatabaseHelper giftDb = new GiftDatabaseHelper(this);
+            ArrayList<LovedGiftHelper> lovedGiftHelpers = giftDb.getTopGift();
+            Log.d("TOP GIFTS", lovedGiftHelpers.toString());
 
+            lovedGiftLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
+<<<<<<< HEAD
         lovedGiftLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         Log.d("Loved Gifts",lovedGiftHelpers.toString());
         lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
         lovedGiftRecycler.setAdapter(lovedGiftAdapter);
         lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
 
+=======
+            lovedGiftAdapter = new LovedGiftAdapter(lovedGiftHelpers);
+            lovedGiftRecycler.setAdapter(lovedGiftAdapter);
+            lovedGiftRecycler.setLayoutManager(lovedGiftLinearLayoutManager);
+      //  }
+>>>>>>> dev-larbi-category
     }
 
 
