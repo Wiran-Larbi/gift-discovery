@@ -263,17 +263,40 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                long id = cursor.getLong(0);
-                String title = cursor.getString(1);
-                String description = cursor.getString(2);
-                String category = cursor.getString(3);
-                String occasion = cursor.getString(4);
-                byte[] image = cursor.getBlob(5);
+                GiftClass gift = new GiftClass();
+                // Assuming you have these methods in your GiftClass
+                int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
+                if (titleIndex != -1) {
+                    gift.setTitle(cursor.getString(titleIndex));
+                } else {
+                    Log.e("GiftDatabaseHelper", "Title column not found");
+                }
 
-                // ... retrieve other columns as needed and create a Gift object
-
-                // Create a Gift object and add it to the search results list
-                GiftClass gift = new GiftClass(title, description, category, occasion, image);
+                int descriptionIndex = cursor.getColumnIndex(COLUMN_DESCRIPTION);
+                if (descriptionIndex != -1) {
+                    gift.setDescription(cursor.getString(descriptionIndex));
+                } else {
+                    Log.e("GiftDatabaseHelper", "Description column not found");
+                }
+                int categoryIndex = cursor.getColumnIndex(COLUMN_CATEGORY);
+                if (categoryIndex != -1) {
+                    gift.setCategory(cursor.getString(categoryIndex));
+                } else {
+                    Log.e("GiftDatabaseHelper", "Category column not found");
+                }
+                int occasionIndex = cursor.getColumnIndex(COLUMN_OCCASION);
+                if (occasionIndex != -1) {
+                    gift.setOccasion(cursor.getString(occasionIndex));
+                } else {
+                    Log.e("GiftDatabaseHelper", "occasion column not found");
+                }
+                int imageIndex = cursor.getColumnIndex(COLUMN_IMAGE);
+                if (imageIndex != -1) {
+                    byte[] imageBytes = cursor.getBlob(imageIndex);
+                    gift.setImage(imageBytes);
+                } else {
+                    Log.e("GiftDatabaseHelper", "image column not found");
+                }
                 searchResults.add(gift);
             } while (cursor.moveToNext());
 
