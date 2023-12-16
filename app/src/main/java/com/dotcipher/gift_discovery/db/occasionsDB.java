@@ -47,7 +47,7 @@ public class occasionsDB extends SQLiteOpenHelper {
     // Creating the table
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_OCCASIONS_TABLE = "CREATE TABLE " + TABLE_OCCASIONS + "("
+        String CREATE_OCCASIONS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_OCCASIONS + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_NAME + " TEXT,"
                 + COLUMN_DESCRIPTION + " TEXT,"
@@ -85,6 +85,7 @@ public class occasionsDB extends SQLiteOpenHelper {
         String selectQuery = "SELECT  * FROM " + TABLE_OCCASIONS;
 
         SQLiteDatabase db = this.getWritableDatabase();
+        this.onCreate(db);
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -132,5 +133,24 @@ public class occasionsDB extends SQLiteOpenHelper {
         addOccasion(new OccasionHelper("Anniversary", "Wedding Anniversary", imageBytes2));
         // ... add more samples ...
 
+    }
+
+    public String[] getAllOccasionsTitles(){
+        ArrayList<String> occasionTitles = new ArrayList<String>();
+        String selectQuery = "SELECT "+ COLUMN_NAME +" FROM " + TABLE_OCCASIONS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int index = cursor.getColumnIndex(COLUMN_NAME);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String occasionTitle = cursor.getString(0);
+                occasionTitles.add(occasionTitle);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] titles = occasionTitles.toArray(new String[0]);
+        return titles;
     }
 }
