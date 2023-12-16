@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
 
     LinearLayout iconAddGift, iconAddOccasion, iconAddPlanning;
 
+    EditText searchGiftEt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
                 startActivity(intent);
             }
         });
+        // Search Gift Functionality
+        searchGiftEt = findViewById(R.id.search_gift_et);
+
+
         // Initialize LinearLayouts
         iconAddGift = findViewById(R.id.iconAddGift);
         iconAddOccasion = findViewById(R.id.iconAddOccasion);

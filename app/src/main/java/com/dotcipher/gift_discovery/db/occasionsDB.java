@@ -19,6 +19,7 @@ import com.dotcipher.gift_discovery.helpers.HomeAdapter.OccasionHelper;
 import com.dotcipher.gift_discovery.utils.ImageUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class occasionsDB extends SQLiteOpenHelper {
@@ -151,6 +152,6 @@ public class occasionsDB extends SQLiteOpenHelper {
         }
         cursor.close();
         String[] titles = occasionTitles.toArray(new String[0]);
-        return titles;
+        return Arrays.stream(titles).distinct().toArray(String[]::new);
     }
 }

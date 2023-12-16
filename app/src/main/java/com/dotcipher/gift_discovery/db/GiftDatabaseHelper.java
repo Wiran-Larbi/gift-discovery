@@ -249,6 +249,41 @@ public class GiftDatabaseHelper extends SQLiteOpenHelper {
         return giftList;
     }
 
+    public List<GiftClass> searchGiftsByTitle(String searchTerm) {
+        List<GiftClass> searchResults = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ID, COLUMN_TITLE, COLUMN_DESCRIPTION, COLUMN_CATEGORY, COLUMN_OCCASION};
+
+        // Query to search for gifts matching the title
+        String selection = COLUMN_TITLE + " LIKE ?";
+        String[] selectionArgs = {"%" + searchTerm + "%"}; // Use searchTerm as the search term
+
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                long id = cursor.getLong(0);
+                String title = cursor.getString(1);
+                String description = cursor.getString(2);
+                String category = cursor.getString(3);
+                String occasion = cursor.getString(4);
+                byte[] image = cursor.getBlob(5);
+
+                // ... retrieve other columns as needed and create a Gift object
+
+                // Create a Gift object and add it to the search results list
+                GiftClass gift = new GiftClass(title, description, category, occasion, image);
+                searchResults.add(gift);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return searchResults;
+    }
+
+
 
 
 }
