@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
     LinearLayout iconAddGift, iconAddOccasion, iconAddPlanning;
 
     EditText searchGiftEt;
+    ImageView searchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,20 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
         });
         // Search Gift Functionality
         searchGiftEt = findViewById(R.id.search_gift_et);
+        searchBtn = findViewById(R.id.searchBtn);
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String searchData = searchGiftEt.getText().toString(); // Get the entered search data
+
+                Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
+                intent.putExtra("searchQuery", searchData);
+                startActivity(intent);
+
+            }
+        });
 
 
         // Initialize LinearLayouts
