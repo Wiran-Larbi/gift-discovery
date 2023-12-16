@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OccasionAdapter.OccasionClickListener {
+    ImageView randomGiftImageView;
     RecyclerView.Adapter lovedGiftAdapter;
     LinearLayoutManager lovedGiftLinearLayoutManager;
     RecyclerView.Adapter categoryGiftAdapter;
@@ -38,7 +40,15 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //random gift
+        randomGiftImageView = findViewById(R.id.randomGiftImageView);
+        randomGiftImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RandomGiftActivity.class);
+                startActivity(intent);
+            }
+        });
         // Initialize LinearLayouts
         iconAddGift = findViewById(R.id.iconAddGift);
         iconAddOccasion = findViewById(R.id.iconAddOccasion);

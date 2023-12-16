@@ -29,12 +29,16 @@
             />
 
         <ImageView
+            android:id="@+id/randomGiftImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/random_icon"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:clickable="true"
+            android:focusable="true"
             />
+
 
 
     </RelativeLayout>

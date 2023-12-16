@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Giftdiscovery"
         tools:targetApi="31">
         <activity
-
+            android:name=".RandomGiftActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddGiftActivity"
-
-
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -28,15 +28,11 @@
             </intent-filter>
         </activity>
         <activity
-        android:name=".AddOccasion"
-        android:exported="false" />
+            android:name=".AddOccasion"
+            android:exported="false" />
         <activity
             android:name=".OccasionActivity"
             android:exported="false" />
-
-
-
-
     </application>
 
 </manifest>
