@@ -19,6 +19,8 @@ import com.dotcipher.gift_discovery.db.occasionsDB;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.OccasionHelper;
 import com.dotcipher.gift_discovery.utils.ImageUtils;
 
+import java.util.ArrayList;
+
 public class AddOccasion extends AppCompatActivity {
 
     private EditText titleEditText;
@@ -41,6 +43,9 @@ public class AddOccasion extends AppCompatActivity {
         descriptionEditText = findViewById(R.id.occasion_description_et);
         addOccasionButton = findViewById(R.id.btnAddOccasion);
 
+        // Initialize the database helper
+        occasionsDB db = new occasionsDB(this);
+
         // ImageView click listener for adding an image
         occasionImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,12 +58,31 @@ public class AddOccasion extends AppCompatActivity {
         addOccasionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                storeOccasionLocally(titleEditText.getText().toString(),
-                        descriptionEditText.getText().toString(),
-                        imageToStore);
+                String title = titleEditText.getText().toString();
+                String description = descriptionEditText.getText().toString();
+
+                // Check if title or description is empty
+                if (title.isEmpty() || description.isEmpty()) {
+                    Toast.makeText(AddOccasion.this, "Please enter both title and description", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Convert image to byte array
+                byte[] imageBytes = imageToStore != null ? ImageUtils.getByteArrayFromBitmap(imageToStore) : null;
+
+                // Create an occasion object
+                OccasionHelper occasion = new OccasionHelper(title, description, imageBytes);
+
+                // Store the occasion in the database
+                db.addOccasion(occasion);
+
+                // Intent to go back to MainActivity
+                Intent intent = new Intent(AddOccasion.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
