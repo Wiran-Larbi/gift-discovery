@@ -143,12 +143,11 @@ public class AddGiftActivity extends AppCompatActivity {
                     String description = gift_description_et.getText().toString();
 
 
-
-                    // Check if any field is empty before storing the gift
-                    if (title.isEmpty() || description.isEmpty() || SelectedCategory.isEmpty() || SelectedOccasion.isEmpty()) {
-                        Toast.makeText(AddGiftActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    if (title.isEmpty() || description.isEmpty() || SelectedCategory.isEmpty() || SelectedOccasion.isEmpty() || imageToStore == null) {
+                        Toast.makeText(AddGiftActivity.this, "Please fill all fields and select an image", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     storeGiftLocally(title,
                                     description,
                                     SelectedCategory,

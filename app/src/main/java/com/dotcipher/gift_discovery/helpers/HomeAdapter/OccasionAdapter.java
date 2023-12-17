@@ -47,6 +47,7 @@ public class OccasionAdapter extends RecyclerView.Adapter<OccasionAdapter.Occasi
         OccasionHelper occasionHelper = occasionHelpers.get(position);
         if (occasionHelper.getImage() != null) {
             byte[] imageBytes = occasionHelper.getImage();
+
             Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
             holder.image.setImageBitmap(bitmap);
         } else {
