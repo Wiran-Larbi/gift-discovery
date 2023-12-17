@@ -134,17 +134,28 @@ public class AddGiftActivity extends AppCompatActivity {
 
 
 
-            db = new GiftDatabaseHelper(this);
             btnAddGift.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    storeGiftLocally(gift_title_et.getText().toString(),
-                            gift_description_et.getText().toString(),
-                            SelectedCategory,
-                            gift_occasion_et.getText().toString(),
-                            imageToStore);
+                    db = new GiftDatabaseHelper(AddGiftActivity.this);
+
+                    String title = gift_title_et.getText().toString();
+                    String description = gift_description_et.getText().toString();
+
+
+
+                    // Check if any field is empty before storing the gift
+                    if (title.isEmpty() || description.isEmpty() || SelectedCategory.isEmpty() || SelectedOccasion.isEmpty()) {
+                        Toast.makeText(AddGiftActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    storeGiftLocally(title,
+                                    description,
+                                    SelectedCategory,
+                                    SelectedOccasion,
+                                    imageToStore);
                     // finally adding our gift to DB
-                    Toast.makeText(AddGiftActivity.this, "Add gift", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddGiftActivity.this, "Add gift ", Toast.LENGTH_SHORT).show();
                     db.addGift(giftClass);
 
                     // Fetching all gifts from db after being successfully inserted
