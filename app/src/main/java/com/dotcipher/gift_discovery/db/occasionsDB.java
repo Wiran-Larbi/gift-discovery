@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.dotcipher.gift_discovery.R;
 import com.dotcipher.gift_discovery.helpers.HomeAdapter.OccasionHelper;
@@ -127,12 +128,12 @@ public class occasionsDB extends SQLiteOpenHelper {
     }
     public void addSampleData() {
         byte[] imageBytes1 = ImageUtils.getImageByteArray(context, R.drawable.gift_icon);
-        byte[] imageBytes2 = ImageUtils.getImageByteArray(context, R.drawable.gift_icon); // Replace with actual drawable
+        byte[] imageBytes2 = ImageUtils.getImageByteArray(context, R.drawable.gift_icon);
 
         // Use the byte arrays when creating OccasionHelper objects
         addOccasion(new OccasionHelper("Birthday", "Birthday celebration", imageBytes1));
         addOccasion(new OccasionHelper("Anniversary", "Wedding Anniversary", imageBytes2));
-        // ... add more samples ...
+
 
     }
 
@@ -154,4 +155,28 @@ public class occasionsDB extends SQLiteOpenHelper {
         String[] titles = occasionTitles.toArray(new String[0]);
         return Arrays.stream(titles).distinct().toArray(String[]::new);
     }
+
+    public void deleteDuplicateOccasions() {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            try {
+                // SQL query to find and delete duplicate occasions
+                String deleteQuery = "DELETE FROM " + TABLE_OCCASIONS +
+                        " WHERE " + COLUMN_ID + " NOT IN (" +
+                        "SELECT MIN(" + COLUMN_ID + ") FROM " + TABLE_OCCASIONS +
+                        " GROUP BY " + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ")";
+
+                db.execSQL(deleteQuery);
+                Log.d("occasionsDB", "Duplicate occasions deleted successfully.");
+            } catch (Exception e) {
+                Log.e("occasionsDB", "Error while deleting duplicate occasions: " + e.getMessage());
+            } finally {
+                if (db != null && db.isOpen()) {
+                    db.close();
+                }
+            }
+        }
+
+
+
 }

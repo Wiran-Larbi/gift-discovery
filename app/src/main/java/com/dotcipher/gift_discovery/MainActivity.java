@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OccasionAdapter.O
 
 
         occasionsDB dbOccassion = new occasionsDB(this);
-        dbOccassion.addSampleData();
+        dbOccassion.deleteDuplicateOccasions();
         // Load data from database and set adapter
         loadOccasionsFromDatabase();
         // Set up click listeners for LinearLayouts
